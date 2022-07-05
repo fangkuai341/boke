@@ -1,11 +1,11 @@
 <template>
-  <div class="allwenzi"></div>
+  <div class="allwenzhang"></div>
 </template>
 
 <script setup></script>
 
 <style>
-.allwenzi {
+.allwenzhang {
   background: rgba(255, 255, 255, 0.7);
   width: 70%;
   margin: 80px auto 0;
