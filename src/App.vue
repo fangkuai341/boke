@@ -22,7 +22,6 @@ li {
 </style>
 <style scoped>
 .img {
-  height: 100%;
   width: 100%;
   position: fixed;
   top: 0;

@@ -21,8 +21,17 @@
       <li>留言板</li>
       <li style="margin-right: 50px">关注我</li>
       <div class="saosuo">
-        <i class="iconfont icon-sousuo" />
-        <input type="text" />
+        <i
+          class="iconfont icon-sousuo"
+          @click="showInput"
+          :style="{
+            left: isshow ? 'calc(100% - 30px)' : '0',
+            color: isshow ? '#4c78fc' : '#fff',
+          }"
+        />
+        <div class="input" :style="{ display: isshow ? 'flex' : 'none' }">
+          <input type="text" ref="input" @blur="isshow = false" />
+        </div>
       </div>
     </ul>
     <div class="bar-left">
@@ -62,6 +71,8 @@ import axios from "axios";
 const city = ref();
 const Weak = ref([]);
 const time = ref();
+const isshow = ref(false);
+const input = ref();
 // const test=(font)=>{
 //   return tianqi.value.indexOf(test) !== -1
 // }
@@ -88,6 +99,12 @@ const scrollevent = () => {
     ("rgba(255, 255, 255, 0.7)");
   }
 };
+const showInput = () => {
+  isshow.value = true;
+  setTimeout(() => {
+    input.value.focus();
+  }, 300);
+};
 onBeforeMount(async () => {
   Weak.value = [];
   window.addEventListener("scroll", scrollevent);
@@ -95,6 +112,7 @@ onBeforeMount(async () => {
     method: "GET",
     url: "http://localhost:3000/cityjson?ie=utf-8",
   }).then((res) => {
+    debugger;
     city.value = JSON.parse(res.data.split("=")[1].slice(0, -1)).cname.split(
       "市"
     )[0];
@@ -118,7 +136,6 @@ onBeforeMount(async () => {
       }
     }
   });
-  console.log(Weak.value);
   setInterval(() => {
     const HH =
       new Date().getHours() < 10
@@ -145,6 +162,8 @@ onBeforeMount(async () => {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  background: rgba(0, 0, 0, 0.3);
+  height: 60px;
 }
 .bar-left {
   margin-right: 40px;
@@ -155,21 +174,21 @@ onBeforeMount(async () => {
     font-size: 30px;
     font-weight: 400;
     margin-right: 8px;
+    color: #4c78fc;
   }
 }
 .bar-right {
   display: flex;
-  height: 40px;
-
+  height: 100%;
   > li {
-    color: #4c78fc;
+    color: #fff;
     margin-left: 20px;
     height: 100%;
     cursor: pointer;
     font-family: PingFang SC;
     font-size: 16px;
     font-weight: 400;
-    line-height: 40px;
+    line-height: 60px;
     padding: 0 5px;
     margin-top: 2px;
     border-radius: 4px;
@@ -182,8 +201,6 @@ onBeforeMount(async () => {
     }
   }
   .icon-sousuo {
-    color: #4c78fc;
-    height: 100%;
     cursor: pointer;
     font-family: PingFang SC;
     font-size: 16px;
@@ -191,8 +208,8 @@ onBeforeMount(async () => {
     line-height: 40px;
   }
   > li:hover {
-    background-color: #4c78fc;
-    color: #fff;
+    background-color: #fff;
+    color: #4c78fc;
     .icon-xiangxia {
       display: inline-block;
       transform: rotateZ(-180deg);
@@ -210,7 +227,7 @@ onBeforeMount(async () => {
   position: relative;
   .NavigationList {
     position: absolute;
-    top: 40px;
+    top: 60px;
     left: 0;
     height: 0;
     overflow: hidden;
@@ -251,7 +268,7 @@ onBeforeMount(async () => {
   position: relative;
   .classificationList {
     position: absolute;
-    top: 40px;
+    top: 60px;
     left: 0;
     height: 0;
     overflow: hidden;
@@ -282,31 +299,20 @@ onBeforeMount(async () => {
   }
 }
 .saosuo {
+  display: flex;
+  align-items: center;
   position: relative;
-  &:hover {
-    i {
-      position: absolute;
-      position: absolute;
-      top: -7px;
-      left: calc(100% - 30px);
-      transition: left 300ms;
-    }
+  .input {
+    display: none;
     input {
-      width: 200px;
-      transition: width 300ms;
+      border: 0;
+      height: 25px;
+      border-radius: 4px;
+      outline: none;
     }
-  }
-  input {
-    border: 0;
-    width: 0;
-    height: 25px;
-    border-radius: 4px;
-    outline: none;
-    transition: width 300ms;
   }
   i {
-    left: 0;
-    transition: left 300ms;
+    position: absolute;
   }
 }
 </style>
