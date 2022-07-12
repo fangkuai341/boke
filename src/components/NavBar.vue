@@ -20,7 +20,7 @@
       </li>
       <li>留言板</li>
       <li style="margin-right: 50px">关注我</li>
-      <div class="saosuo">
+      <div class="saosuo" v-if="hasSearsh">
         <i
           class="iconfont icon-sousuo"
           @click="showInput"
@@ -30,7 +30,13 @@
           }"
         />
         <div class="input" :style="{ display: isshow ? 'flex' : 'none' }">
-          <input type="text" ref="input" @blur="isshow = false" />
+          <input
+            type="text"
+            ref="input"
+            v-model="keyword"
+            @blur="isshow = false"
+            @keydown="keydown"
+          />
         </div>
       </div>
     </ul>
@@ -67,18 +73,36 @@
 
 <script setup>
 import { computed, onBeforeMount, onMounted, ref, watch } from "vue";
+import { useRouter } from "vue-router";
 import axios from "axios";
+const router = useRouter();
 const city = ref();
 const Weak = ref([]);
 const time = ref();
 const isshow = ref(false);
 const input = ref();
+
+const hasSearsh = ref(true);
+watch(
+  window.location.href,
+  () => {
+    if (window.location.href.indexOf("search") === -1) {
+      hasSearsh.value = true;
+    } else {
+      hasSearsh.value = false;
+    }
+  },
+  {
+    immediate: true,
+    deep: true,
+  }
+);
+const keyword = ref();
 // const test=(font)=>{
 //   return tianqi.value.indexOf(test) !== -1
 // }
 const tianqi = computed(() => {
   let h = new Date().getHours();
-  debugger;
   if (-1 < +h < 6) {
     return Weak.value[1];
   }
@@ -94,7 +118,7 @@ const scrollevent = () => {
     document.querySelector(".bar").style.background = "#66ccff";
     document.querySelector(".bar").style.borderBottom = "1px #e8eaed solid";
   } else {
-    document.querySelector(".bar").style.background = "rgba(255, 255, 255,0)";
+    document.querySelector(".bar").style.background = "rgba(0, 0, 0, 0.3)";
     document.querySelector(".bar").style.borderBottom = "0px";
     ("rgba(255, 255, 255, 0.7)");
   }
@@ -104,6 +128,12 @@ const showInput = () => {
   setTimeout(() => {
     input.value.focus();
   }, 300);
+};
+const keydown = (e) => {
+  if (e.code === "Enter") {
+    router.push({ path: `/search/${keyword.value}` });
+    hasSearsh.value = false;
+  }
 };
 onBeforeMount(async () => {
   Weak.value = [];
