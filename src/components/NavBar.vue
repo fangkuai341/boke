@@ -4,23 +4,38 @@
       <li class="Navigation">
         导航 <i class="iconfont icon-xiangxia" />
         <ul class="NavigationList">
-          <li>首页</li>
-          <li>随机文章</li>
-          <li>最新文章</li>
+          <li @click="router.push({ path: '/' })">首页</li>
+          <li @click="randwanzhang">随机文章</li>
+          <li @click="newwanzhang">最新文章</li>
         </ul>
       </li>
       <li class="classification">
         分类 <i class="iconfont icon-xiangxia" />
         <ul class="classificationList">
-          <li>技术</li>
-          <li>游戏</li>
-          <li>动漫</li>
-          <li>鬼畜视频</li>
+          <li @click="classificationList('技术')">技术</li>
+          <li @click="classificationList('游戏')">游戏</li>
+          <li @click="classificationList('动漫')">动漫</li>
+          <li @click="classificationList('鬼畜')">鬼畜</li>
         </ul>
       </li>
-      <li>留言板</li>
-      <li style="margin-right: 50px">关注我</li>
-      <div class="saosuo" v-if="hasSearsh">
+      <li @click="liuyanclick">留言板</li>
+      <li style="margin-right: 50px" class="gzMe">
+        关注我<i class="iconfont icon-xiangxia" />
+        <ul class="gzMeList">
+          <a
+            href="https://space.bilibili.com/293942714?spm_id_from=333.337.0.0"
+            target="_blank"
+            >bilibili</a
+          >
+          <a href="http://localhost:8080/erweima.jpg" target="_blank"
+            >微信公众号</a
+          >
+          <a href="https://jq.qq.com/?_wv=1027&k=riIqjIjI" target="_blank"
+            >QQ群</a
+          >
+        </ul>
+      </li>
+      <div class="saosuo" v-if="hasSearch">
         <i
           class="iconfont icon-sousuo"
           @click="showInput"
@@ -73,46 +88,18 @@
 
 <script setup>
 import { computed, onBeforeMount, onMounted, ref, watch } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import axios from "axios";
 const router = useRouter();
+const route = useRoute();
 const city = ref();
 const Weak = ref([]);
 const time = ref();
 const isshow = ref(false);
 const input = ref();
-
-const hasSearsh = ref(true);
-watch(
-  window.location.href,
-  () => {
-    if (window.location.href.indexOf("search") === -1) {
-      hasSearsh.value = true;
-    } else {
-      hasSearsh.value = false;
-    }
-  },
-  {
-    immediate: true,
-    deep: true,
-  }
-);
 const keyword = ref();
-// const test=(font)=>{
-//   return tianqi.value.indexOf(test) !== -1
-// }
-const tianqi = computed(() => {
-  let h = new Date().getHours();
-  if (-1 < +h < 6) {
-    return Weak.value[1];
-  }
-  if (5 < +h < 18) {
-    return Weak.value[2];
-  }
-  if (17 < +h < 24) {
-    return Weak.value[3];
-  }
-});
+const tianqi = ref();
+const hasSearch = ref(true);
 const scrollevent = () => {
   if (document.documentElement.scrollTop > 20) {
     document.querySelector(".bar").style.background = "#66ccff";
@@ -123,48 +110,70 @@ const scrollevent = () => {
     ("rgba(255, 255, 255, 0.7)");
   }
 };
+watch(
+  () => route,
+  (n) => {
+    if (n.path.indexOf("/search") !== -1) {
+      hasSearch.value = false;
+    } else {
+      hasSearch.value = true;
+    }
+  },
+  { deep: true }
+);
 const showInput = () => {
   isshow.value = true;
   setTimeout(() => {
     input.value.focus();
   }, 300);
 };
+const liuyanclick = () => {
+  router.push({ path: `/message` });
+};
 const keydown = (e) => {
   if (e.code === "Enter") {
     router.push({ path: `/search/${keyword.value}` });
-    hasSearsh.value = false;
   }
+};
+const newwanzhang = async () => {
+  let id;
+  await axios({
+    method: "GET",
+    url: `http://localhost:3000/wenzi/getnewwenzahngconcetByUser`,
+  }).then((res) => {
+    id = res.data.data;
+  });
+  if (!id) {
+    alert("还没有文章哦");
+    return;
+  }
+  router.push({ path: `/article/${id}` });
+};
+const randwanzhang = async () => {
+  let id;
+  await axios({
+    method: "GET",
+    url: `http://localhost:3000/wenzi/getrandwenzahngconcetByUser`,
+  }).then((res) => {
+    id = res.data.data;
+  });
+  if (!id) {
+    alert("还没有文章哦");
+    return;
+  }
+  router.push({ path: `/article/${id}` });
+};
+const classificationList = (type) => {
+  router.push({ path: `/classification/${type}` });
 };
 onBeforeMount(async () => {
   Weak.value = [];
   window.addEventListener("scroll", scrollevent);
   await axios({
     method: "GET",
-    url: "http://localhost:3000/cityjson?ie=utf-8",
+    url: `https://v0.yiketianqi.com/free/day?appid=87273197&appsecret=ZdbOGg77&vue=1&unescape=1`,
   }).then((res) => {
-    debugger;
-    city.value = JSON.parse(res.data.split("=")[1].slice(0, -1)).cname.split(
-      "市"
-    )[0];
-  });
-  await axios({
-    method: "GET",
-    url: `http://localhost:3000/WeatherApi?city=${city.value}`,
-  }).then((res) => {
-    //上一天
-    let weaks = res.data.split("<weather>")[1].split("<type>");
-    for (let i = 0; i < weaks.length; i++) {
-      if (weaks[i].indexOf("</type>") !== -1) {
-        Weak.value.push(weaks[i].split("</type>")[0]);
-      }
-    }
-    //今天
-    weaks = res.data.split("<weather>")[2].split("<type>");
-    for (let i = 0; i < weaks.length; i++) {
-      if (weaks[i].indexOf("</type>") !== -1) {
-        Weak.value.push(weaks[i].split("</type>")[0]);
-      }
-    }
+    tianqi.value = res.data.wea;
   });
   setInterval(() => {
     const HH =
@@ -194,6 +203,7 @@ onBeforeMount(async () => {
   justify-content: space-between;
   background: rgba(0, 0, 0, 0.3);
   height: 60px;
+  z-index: 1000;
 }
 .bar-left {
   margin-right: 40px;
@@ -294,6 +304,7 @@ onBeforeMount(async () => {
     transition: height 300ms;
   }
 }
+
 .classification {
   position: relative;
   .classificationList {
@@ -323,6 +334,49 @@ onBeforeMount(async () => {
       }
     }
     & > li:hover {
+      background-color: #4c78fc;
+      color: #fff;
+    }
+  }
+}
+.gzMe:hover {
+  .gzMeList {
+    height: 120px;
+    transition: height 300ms;
+  }
+}
+.gzMe {
+  position: relative;
+  .gzMeList {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    height: 0;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255);
+    color: #000;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+    width: 110px;
+    transition: height 300ms;
+    > a {
+      display: block;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+      font-family: PingFang SC;
+      font-size: 16px;
+      font-weight: 400;
+      color: #000;
+      text-decoration: none;
+
+      line-height: 20px;
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+    & > a:hover {
       background-color: #4c78fc;
       color: #fff;
     }

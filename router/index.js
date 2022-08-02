@@ -2,6 +2,8 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import wenzhang from "@/components/article/index";
 import allWenzi from "@/components/home/AllWenzi.vue";
 import search from "@/components/search/index";
+import meg from "@/components/message/index";
+import fenli from "@/components/search/fenli/index";
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
@@ -16,6 +18,14 @@ const router = createRouter({
     {
       path: "/search/:keyword",
       component: search,
+    },
+    {
+      path: "/message",
+      component: meg,
+    },
+    {
+      path: "/classification/:keyword",
+      component: fenli,
     },
   ],
 });

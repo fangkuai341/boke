@@ -1,17 +1,41 @@
 <template>
   <div class="search">
-    <input type="text" v-model="inputValue" />
+    <input type="text" v-model="inputValue" @keydown="keydown" />
     <i class="iconfont icon-sousuo" @click="showInput"></i>
-    <Allcard />
+    <Allcard :cardData="cardData" />
   </div>
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { useRoute } from "vue-router";
+import { ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import axios from "axios";
 import Allcard from "@/components/search/Allcard.vue";
+const router = useRouter();
 const route = useRoute();
-const inputValue = computed(() => route.params.keyword);
+const inputValue = ref(route.params.keyword);
+const cardData = ref();
+const keydown = (e) => {
+  if (!inputValue.value) {
+    return;
+  }
+  if (e.code === "Enter") {
+    router.push({ path: `/search/${inputValue.value}` });
+  }
+};
+const showInput = () => {
+  router.push({ path: `/search/${inputValue.value}` });
+};
+onMounted(async () => {
+  await axios({
+    method: "GET",
+    url: `http://localhost:3000/wenzi/getsearchCartByUser?serchCon=${inputValue.value}`,
+  }).then((res) => {
+    if (res.data.code === 200) {
+      cardData.value = res.data.data;
+    }
+  });
+});
 </script>
 
 <style scoped lang="less">

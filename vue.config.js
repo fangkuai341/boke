@@ -12,17 +12,12 @@ module.exports = defineConfig({
         changeOrigin: false,
         ws: false,
       },
-      '/cityjson': {
-        target: 'http://pv.sohu.com',
-        changeOrigin: true,
-
-      },
-      '/WeatherApi': {
-        target: 'http://wthrcdn.etouch.cn',
-        changeOrigin: true,
-
-      },
       '/dianzan': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+
+      },
+      '/getmsg': {
         target: 'http://localhost:8080',
         changeOrigin: true,
 
@@ -31,6 +26,10 @@ module.exports = defineConfig({
         target: 'http://localhost:8080',
         changeOrigin: true,
 
+      },
+      '/msg': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
       },
     },
   }

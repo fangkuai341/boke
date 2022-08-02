@@ -63,7 +63,11 @@ const clickdianzan = async (event) => {
   await axios({
     method: "POST",
     url: "http://localhost:3000/dianzan/isDz",
-    data: { id: JSON.parse(localStorage.getItem("user"))[0].id },
+    data: {
+      id: localStorage.getItem("user")
+        ? JSON.parse(localStorage.getItem("user"))[0].id
+        : "",
+    },
   }).then((res) => {
     if (res.data.code === -200) {
       emits("login");
@@ -97,7 +101,9 @@ const serverDianzan = async () => {
     url: "http://localhost:3000/dianzan/Dz",
     data: {
       Upwemzis: localStorage.getItem("Upwemzis"),
-      userid: JSON.parse(localStorage.getItem("user"))[0].id,
+      userid: JSON.parse(localStorage.getItem("user"))
+        ? JSON.parse(localStorage.getItem("user"))[0].id
+        : "",
       giveupnum: dianzan.value,
       wenzhangid: wenzhang.id,
     },
@@ -113,7 +119,11 @@ onMounted(async () => {
   await axios({
     method: "POST",
     url: "http://localhost:3000/dianzan/isDz",
-    data: { id: JSON.parse(localStorage.getItem("user"))[0].id },
+    data: {
+      id: JSON.parse(localStorage.getItem("user"))
+        ? JSON.parse(localStorage.getItem("user"))[0].id
+        : "",
+    },
   }).then((res) => {
     if (res.data.code === 200) {
       Upwemzis.value = JSON.parse(res.data.data[0].Upwemzis);
@@ -136,6 +146,9 @@ onMounted(async () => {
   margin-top: 10px;
   border-radius: 4px;
   cursor: pointer;
+  &:first-child {
+    margin-top: 0;
+  }
   .titandtime {
     display: flex;
     justify-content: space-between;

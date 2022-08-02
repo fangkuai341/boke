@@ -100,7 +100,7 @@ onMounted(async () => {
     method: "GET",
     url: "http://localhost:3000/wenzi/getCart",
   }).then((res) => {
-    weizhangs.value = res.data.data;
+    weizhangs.value = res.data.data.reverse();
   });
 });
 </script>

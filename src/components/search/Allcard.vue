@@ -1,17 +1,12 @@
 <template>
   <div class="allcard">
-    <card />
-    <card />
-    <card />
-    <card />
-    <card />
-    <card />
-    <card />
+    <card v-for="item in props.cardData" :key="item.id" :item="item" />
   </div>
 </template>
 
 <script setup>
 import card from "@/components/search/card.vue";
+const props = defineProps({ cardData: Array });
 </script>
 
 <style scoped lang="less">
