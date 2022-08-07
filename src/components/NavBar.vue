@@ -27,7 +27,7 @@
             target="_blank"
             >bilibili</a
           >
-          <a href="http://localhost:8080/erweima.jpg" target="_blank"
+          <a href="http://139.224.162.183/erweima.jpg" target="_blank"
             >微信公众号</a
           >
           <a href="https://jq.qq.com/?_wv=1027&k=riIqjIjI" target="_blank"

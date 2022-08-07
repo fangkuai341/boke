@@ -8,27 +8,27 @@ module.exports = defineConfig({
     open: true,
     proxy: {
       '/wenzi': {
-        target: 'http://localhost:8080',
+        target: 'http://139.224.162.183',
         changeOrigin: false,
         ws: false,
       },
       '/dianzan': {
-        target: 'http://localhost:8080',
+        target: 'http://139.224.162.183',
         changeOrigin: true,
 
       },
       '/getmsg': {
-        target: 'http://localhost:8080',
+        target: 'http://139.224.162.183',
         changeOrigin: true,
 
       },
       '/account': {
-        target: 'http://localhost:8080',
+        target: 'http://139.224.162.183',
         changeOrigin: true,
 
       },
       '/msg': {
-        target: 'http://localhost:8080',
+        target: 'http://139.224.162.183',
         changeOrigin: true,
       },
     },

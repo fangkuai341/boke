@@ -3,7 +3,7 @@
     <NavBar />
     <div>
       <img
-        src="https://api.r10086.com/img-api.php?type=动漫综合4"
+        src="https://service-5z0sdahv-1306777571.sh.apigw.tencentcs.com/release/"
         class="img"
       />
     </div>
