@@ -64,7 +64,7 @@ const Name = ref();
 const zhuce = async () => {
   await axios({
     method: "POST",
-    url: "http://localhost:3000/account/reg",
+    url: "http://139.224.162.183/account/reg",
     data: {
       name: Name.value,
       pwd: md5(Pwd.value),
@@ -78,7 +78,7 @@ const zhuce = async () => {
 const denglu = async () => {
   await axios({
     method: "POST",
-    url: "http://localhost:3000/account/login",
+    url: "http://139.224.162.183/account/login",
     data: {
       name: Name.value,
       pwd: md5(Pwd.value),
@@ -98,7 +98,7 @@ const login = () => {
 onMounted(async () => {
   await axios({
     method: "GET",
-    url: "http://localhost:3000/wenzi/getCart",
+    url: "http://139.224.162.183/wenzi/getCart",
   }).then((res) => {
     weizhangs.value = res.data.data.reverse();
   });

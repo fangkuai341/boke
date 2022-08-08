@@ -20,7 +20,7 @@ const cardData = ref([]);
 onMounted(async () => {
   await axios({
     method: "GET",
-    url: `http://localhost:3000/wenzi/getsearchCartByUser?serchCon=${inputValue.value}`,
+    url: `http://139.224.162.183/wenzi/getsearchCartByUser?serchCon=${inputValue.value}`,
   }).then((res) => {
     if (res.data.code === 200) {
       cardData.value = res.data.data;

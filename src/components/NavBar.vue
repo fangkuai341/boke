@@ -139,7 +139,7 @@ const newwanzhang = async () => {
   let id;
   await axios({
     method: "GET",
-    url: `http://localhost:3000/wenzi/getnewwenzahngconcetByUser`,
+    url: `http://139.224.162.183/wenzi/getnewwenzahngconcetByUser`,
   }).then((res) => {
     id = res.data.data;
   });
@@ -153,7 +153,7 @@ const randwanzhang = async () => {
   let id;
   await axios({
     method: "GET",
-    url: `http://localhost:3000/wenzi/getrandwenzahngconcetByUser`,
+    url: `http://139.224.162.183/wenzi/getrandwenzahngconcetByUser`,
   }).then((res) => {
     id = res.data.data;
   });

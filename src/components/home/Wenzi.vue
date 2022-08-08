@@ -62,7 +62,7 @@ const clickdianzan = async (event) => {
   event.cancelBubble = true;
   await axios({
     method: "POST",
-    url: "http://localhost:3000/dianzan/isDz",
+    url: "http://139.224.162.183/dianzan/isDz",
     data: {
       id: localStorage.getItem("user")
         ? JSON.parse(localStorage.getItem("user"))[0].id
@@ -98,7 +98,7 @@ const wenzhangtiaozhaung = (id) => {
 const serverDianzan = async () => {
   await axios({
     method: "POST",
-    url: "http://localhost:3000/dianzan/Dz",
+    url: "http://139.224.162.183/dianzan/Dz",
     data: {
       Upwemzis: localStorage.getItem("Upwemzis"),
       userid: JSON.parse(localStorage.getItem("user"))
@@ -118,7 +118,7 @@ onMounted(async () => {
   });
   await axios({
     method: "POST",
-    url: "http://localhost:3000/dianzan/isDz",
+    url: "http://139.224.162.183/dianzan/isDz",
     data: {
       id: JSON.parse(localStorage.getItem("user"))
         ? JSON.parse(localStorage.getItem("user"))[0].id
