@@ -78,7 +78,7 @@ onMounted(async () => {
 
 <style setup lang="less">
 .allwenzhang {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.9);
   width: 70%;
   margin: 80px auto 0;
   border-radius: 4px 4px 0 0;

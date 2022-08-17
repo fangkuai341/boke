@@ -19,7 +19,7 @@ console.log(props.item);
 <style lang="less" scoped>
 .mag {
   margin: 10px auto 0;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(255, 255, 255, 0.9);
   width: 120vh;
   padding: 10px 20px;
   border-radius: 4px;

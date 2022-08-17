@@ -13,6 +13,8 @@
 <script setup>
 import NavBar from "@/components/NavBar.vue";
 import { onMounted } from "vue";
+import { useStore } from "./store/index.js";
+const store = useStore();
 onMounted(() => {
   L2Dwidget.init({
     model: {
@@ -49,6 +51,7 @@ li {
 <style lang="less" scoped>
 .img {
   width: 100%;
+  height: 100vh;
   position: fixed;
   top: 0;
   z-index: -1;

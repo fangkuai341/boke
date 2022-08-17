@@ -55,6 +55,8 @@ import HomeWenzi from "@/components/home/Wenzi";
 import { onMounted, ref } from "@vue/runtime-core";
 import md5 from "md5";
 import axios from "axios";
+import { useStore } from "../../store/index.js";
+const store = useStore();
 const weizhangs = ref([]);
 const isLogin = ref(false);
 const iszhuce = ref(false);
@@ -103,6 +105,26 @@ onMounted(async () => {
     weizhangs.value = res.data.data.reverse();
   });
 });
+//第一种修改方式
+// const add = () => {
+//   store.count++;
+// };
+//第二种修改方式(多数据改变，官方有优化，传递对象不合适复杂的逻辑)
+// const add = () => {
+//   store.$patch({
+//     count: store.count + 2,
+//   });
+// };
+//第三种修改方式(多数据改变，官方有优化，传递函数合适复杂的逻辑)
+// const add = () => {
+//   store.$patch((state) => {
+//     state.count += 3;
+//   });
+// };
+//第四种修改方式使用actions(适合更复杂的逻辑)
+// const add = () => {
+//   store.changeCount();
+// };
 </script>
 
 <style scoped lang="less">

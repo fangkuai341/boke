@@ -42,6 +42,8 @@
 import { computed, onMounted, ref } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
+import { useStore } from "../../store/index.js";
+const store = useStore();
 const emits = defineEmits(["login"]);
 const props = defineProps({ item: Object });
 const wenzhang = props.item;
@@ -75,9 +77,9 @@ const clickdianzan = async (event) => {
     if (res.data.code === 200) {
       dianzan.value++;
       isdianzan.value = true;
-      let a = JSON.parse(localStorage.getItem("Upwemzis"));
+      let a = store.Upwemzis;
       a.push(wenzhang.id);
-      localStorage.setItem("Upwemzis", JSON.stringify(a));
+      store.Upwemzis = a;
       serverDianzan();
     }
   });
@@ -86,10 +88,9 @@ const clickqvxiaodianzan = (event) => {
   event.cancelBubble = true;
   dianzan.value--;
   isdianzan.value = false;
-  let a = JSON.parse(localStorage.getItem("Upwemzis"));
+  let a = store.Upwemzis;
   a.splice(a.indexOf(wenzhang.id), 1);
-  localStorage.setItem("Upwemzis", JSON.stringify(a));
-
+  store.Upwemzis = a;
   serverDianzan();
 };
 const wenzhangtiaozhaung = (id) => {
@@ -100,7 +101,7 @@ const serverDianzan = async () => {
     method: "POST",
     url: "http://139.224.162.183/dianzan/Dz",
     data: {
-      Upwemzis: localStorage.getItem("Upwemzis"),
+      Upwemzis: JSON.stringify(store.Upwemzis),
       userid: JSON.parse(localStorage.getItem("user"))
         ? JSON.parse(localStorage.getItem("user"))[0].id
         : "",
@@ -116,6 +117,7 @@ onMounted(async () => {
     config.headers.token = localStorage.getItem("token");
     return config;
   });
+  //获取用户点赞的文章
   await axios({
     method: "POST",
     url: "http://139.224.162.183/dianzan/isDz",
@@ -127,7 +129,7 @@ onMounted(async () => {
   }).then((res) => {
     if (res.data.code === 200) {
       Upwemzis.value = JSON.parse(res.data.data[0].Upwemzis);
-      localStorage.setItem("Upwemzis", res.data.data[0].Upwemzis);
+      store.Upwemzis = Upwemzis.value;
       for (let i = 0; i < Upwemzis.value.length; i++) {
         if (Upwemzis.value[i] === wenzhang.id) {
           isdianzan.value = true;
