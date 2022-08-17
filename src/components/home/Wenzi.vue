@@ -8,9 +8,9 @@
     <div class="img">
       <img
         v-for="(item, index) in img"
-        :src="'data:' + item"
+        :src="item"
         :key="index"
-        style="height: 200px"
+        style="height: 200px; width: 100%"
       />
     </div>
     <div class="bottom">
@@ -56,7 +56,12 @@ const biaoqians = computed(() => {
   return a;
 });
 const img = computed(() => {
-  let a = wenzhang.img.split("data:").slice(1);
+  let a;
+  if (wenzhang.img) {
+    a = JSON.parse(wenzhang.img);
+  } else {
+    a = [];
+  }
   return a;
 });
 const clickdianzan = async (event) => {
