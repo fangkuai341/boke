@@ -69,7 +69,7 @@ const clickdianzan = async (event) => {
   event.cancelBubble = true;
   await axios({
     method: "POST",
-    url: "http://139.224.162.183/dianzan/isDz",
+    url: "http://116.204.65.53/dianzan/isDz",
     data: {
       id: localStorage.getItem("user")
         ? JSON.parse(localStorage.getItem("user"))[0].id
@@ -104,7 +104,7 @@ const wenzhangtiaozhaung = (id) => {
 const serverDianzan = async () => {
   await axios({
     method: "POST",
-    url: "http://139.224.162.183/dianzan/Dz",
+    url: "http://116.204.65.53/dianzan/Dz",
     data: {
       Upwemzis: JSON.stringify(store.Upwemzis),
       userid: JSON.parse(localStorage.getItem("user"))
@@ -125,7 +125,7 @@ onMounted(async () => {
   //获取用户点赞的文章
   await axios({
     method: "POST",
-    url: "http://139.224.162.183/dianzan/isDz",
+    url: "http://116.204.65.53/dianzan/isDz",
     data: {
       id: JSON.parse(localStorage.getItem("user"))
         ? JSON.parse(localStorage.getItem("user"))[0].id

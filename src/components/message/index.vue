@@ -69,7 +69,7 @@ const click = async () => {
   });
   await axios({
     method: "POST",
-    url: "http://139.224.162.183/msg/setMsg",
+    url: "http://116.204.65.53/msg/setMsg",
     data: {
       id: localStorage.getItem("user")
         ? JSON.parse(localStorage.getItem("user"))[0].id
@@ -98,7 +98,7 @@ const Name = ref();
 const zhuce = async () => {
   await axios({
     method: "POST",
-    url: "http://139.224.162.183/account/reg",
+    url: "http://116.204.65.53/account/reg",
     data: {
       name: Name.value,
       pwd: md5(Pwd.value),
@@ -112,7 +112,7 @@ const zhuce = async () => {
 const denglu = async () => {
   await axios({
     method: "POST",
-    url: "http://139.224.162.183/account/login",
+    url: "http://116.204.65.53/account/login",
     data: {
       name: Name.value,
       pwd: md5(Pwd.value),
@@ -132,7 +132,7 @@ onMounted(() => {
 const getMsg = async () => {
   await axios({
     method: "GET",
-    url: "http://139.224.162.183/getmsg/getMsg",
+    url: "http://116.204.65.53/getmsg/getMsg",
   }).then((res) => {
     allmsg.value = res.data.data.reverse();
   });

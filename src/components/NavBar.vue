@@ -27,7 +27,7 @@
             target="_blank"
             >bilibili</a
           >
-          <a href="http://139.224.162.183/erweima.jpg" target="_blank"
+          <a href="http://116.204.65.53/erweima.jpg" target="_blank"
             >微信公众号</a
           >
           <a href="https://jq.qq.com/?_wv=1027&k=riIqjIjI" target="_blank"
@@ -139,7 +139,7 @@ const newwanzhang = async () => {
   let id;
   await axios({
     method: "GET",
-    url: `http://139.224.162.183/wenzi/getnewwenzahngconcetByUser`,
+    url: `http://116.204.65.53/wenzi/getnewwenzahngconcetByUser`,
   }).then((res) => {
     id = res.data.data;
   });
@@ -153,7 +153,7 @@ const randwanzhang = async () => {
   let id;
   await axios({
     method: "GET",
-    url: `http://139.224.162.183/wenzi/getrandwenzahngconcetByUser`,
+    url: `http://116.204.65.53/wenzi/getrandwenzahngconcetByUser`,
   }).then((res) => {
     id = res.data.data;
   });

@@ -29,7 +29,7 @@ const showInput = () => {
 onMounted(async () => {
   await axios({
     method: "GET",
-    url: `http://139.224.162.183/wenzi/getsearchCartByUser?serchCon=${inputValue.value}`,
+    url: `http://116.204.65.53/wenzi/getsearchCartByUser?serchCon=${inputValue.value}`,
   }).then((res) => {
     if (res.data.code === 200) {
       cardData.value = res.data.data;
