@@ -69,7 +69,7 @@ const click = async () => {
   });
   await axios({
     method: "POST",
-    url: "http://116.204.65.53/msg/setMsg",
+    url: "http://www.dls-lcy.com/msg/setMsg",
     data: {
       id: localStorage.getItem("user")
         ? JSON.parse(localStorage.getItem("user"))[0].id
@@ -98,7 +98,7 @@ const Name = ref();
 const zhuce = async () => {
   await axios({
     method: "POST",
-    url: "http://116.204.65.53/account/reg",
+    url: "http://www.dls-lcy.com/account/reg",
     data: {
       name: Name.value,
       pwd: md5(Pwd.value),
@@ -112,7 +112,7 @@ const zhuce = async () => {
 const denglu = async () => {
   await axios({
     method: "POST",
-    url: "http://116.204.65.53/account/login",
+    url: "http://www.dls-lcy.com/account/login",
     data: {
       name: Name.value,
       pwd: md5(Pwd.value),
@@ -132,7 +132,7 @@ onMounted(() => {
 const getMsg = async () => {
   await axios({
     method: "GET",
-    url: "http://116.204.65.53/getmsg/getMsg",
+    url: "http://www.dls-lcy.com/getmsg/getMsg",
   }).then((res) => {
     allmsg.value = res.data.data.reverse();
   });

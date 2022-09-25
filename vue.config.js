@@ -8,24 +8,24 @@ module.exports = defineConfig({
     open: true,
     proxy: {
       "/wenzi": {
-        target: "http://116.204.65.53",
+        target: "http://www.dls-lcy.com",
         changeOrigin: false,
         ws: false,
       },
       "/dianzan": {
-        target: "http://116.204.65.53",
+        target: "http://www.dls-lcy.com",
         changeOrigin: true,
       },
       "/getmsg": {
-        target: "http://116.204.65.53",
+        target: "http://www.dls-lcy.com",
         changeOrigin: true,
       },
       "/account": {
-        target: "http://116.204.65.53",
+        target: "http://www.dls-lcy.com",
         changeOrigin: true,
       },
       "/msg": {
-        target: "http://116.204.65.53",
+        target: "http://www.dls-lcy.com",
         changeOrigin: true,
       },
     },
