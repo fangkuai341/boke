@@ -1,11 +1,14 @@
 <template>
-  <div class="allwenzi">
-    <HomeWenzi
-      v-for="item in weizhangs"
-      :key="item.id"
-      :item="item"
-      @login="login"
-    />
+  <div style="display: flex; align-items: flex-start">
+    <div class="allwenzi">
+      <HomeWenzi
+        v-for="item in weizhangs"
+        :key="item.id"
+        :item="item"
+        @login="login"
+      />
+    </div>
+    <MyName />
   </div>
   <div class="popup" v-if="isLogin">
     <div class="tanc" v-if="!iszhuce">
@@ -52,6 +55,7 @@
 
 <script setup>
 import HomeWenzi from "@/components/home/Wenzi";
+import MyName from "./myName.vue";
 import { onMounted, ref } from "@vue/runtime-core";
 import md5 from "md5";
 import axios from "axios";
@@ -130,8 +134,8 @@ onMounted(async () => {
 <style scoped lang="less">
 .allwenzi {
   background: rgba(255, 255, 255, 0.7);
-  width: 70%;
-  margin: 80px auto 0;
+  width: 55%;
+  margin: 80px 0 0 15%;
   border-radius: 4px 4px 0 0;
   overflow: hidden;
 }
