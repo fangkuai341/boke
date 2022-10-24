@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" @click="wenzhangtiaozhaung(props.item.id)">
     <img :src="JSON.parse(props.item.img)[0]" />
     <div style="margin-top: 10px">{{ props.item.title }}</div>
     <div class="botton">
@@ -49,6 +49,9 @@ const getTime = (dateData, format) => {
     }
   }
   return fmt;
+};
+const wenzhangtiaozhaung = (id) => {
+  router.push({ path: `/article/${id}` });
 };
 </script>
 
