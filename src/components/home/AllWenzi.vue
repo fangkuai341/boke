@@ -22,7 +22,7 @@
         </div>
         <div>
           <div class="font" style="margin-top: 24px">密码</div>
-          <input type="text" placeholder="请输入密码" v-model="Pwd" />
+          <input type="password" placeholder="请输入密码" v-model="Pwd" />
         </div>
         <div class="button" @click="denglu">提交</div>
         <div class="zhucu">
@@ -41,11 +41,11 @@
         </div>
         <div>
           <div class="font" style="margin-top: 24px">密码</div>
-          <input type="text" placeholder="请输入密码" v-model="Pwd" />
+          <input type="password" placeholder="请输入密码" v-model="Pwd" />
         </div>
         <div>
           <div class="font" style="margin-top: 24px">再输入一次密码</div>
-          <input type="text" placeholder="请输入密码" v-model="PwdTwo" />
+          <input type="password" placeholder="请输入密码" v-model="PwdTwo" />
         </div>
         <div class="button" @click="zhuce">注册并登录</div>
       </div>
