@@ -2,7 +2,7 @@
   <div style="margin-top: 80px; margin-left: 50px; position: fixed; left: 70%">
     <div class="name">
       <img src="@/assets/images/tx.jpg" />
-      <div class="nicheng">方块</div>
+      <div class="nicheng">洛懿川</div>
       <div>一个喜欢动漫和鬼畜的前端狗</div>
       <div class="jianjie">{{ jianjie }}</div>
     </div>
