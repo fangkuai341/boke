@@ -13,7 +13,9 @@
 
 <script setup>
 import { computed } from "vue";
+import { useRouter } from "vue-router";
 const props = defineProps({ item: Object });
+const router = useRouter();
 const img = computed(() => {
   let a = props.item.img.split("data:").slice(1, 2);
   return a;
