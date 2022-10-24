@@ -1,6 +1,6 @@
 <template>
   <div class="card">
-    <img :src="'data:' + img[0]" />
+    <img :src="JSON.parse(props.item.img)[0]" />
     <div style="margin-top: 10px">{{ props.item.title }}</div>
     <div class="botton">
       <div>观看：{{ props.item.show }}</div>
