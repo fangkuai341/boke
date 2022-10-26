@@ -7,6 +7,7 @@
         class="img"
       />
     </div>
+    <div class="sssss">冀ICP备2022021189</div>
     <router-view :key="$route.path"></router-view>
   </div>
 </template>
@@ -147,5 +148,12 @@ li {
 .updateCurr {
   cursor: url(https://cdn.jsdelivr.net/gh/Tomotoes/images/blog/default.cur),
     auto;
+}
+.sssss {
+  width: 160px;
+  position: fixed;
+  top: 100%;
+  left: 100%;
+  transform: translateX(-100%) translateY(-100%);
 }
 </style>
