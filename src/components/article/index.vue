@@ -57,15 +57,13 @@ const getTime = (dateData, format) => {
 onMounted(async () => {
   await axios({
     method: "POST",
-    url: `http://www.dls-lcy.com/wenzi/addshow`,
+    url: `./wenzi/addshow`,
     data: {
       wenzhangid: route.params.id,
     },
   });
   axios
-    .get(
-      `http://www.dls-lcy.com/wenzi/getwenzahngconcetByUser?wenzhangId=${route.params.id}`
-    )
+    .get(`./wenzi/getwenzahngconcetByUser?wenzhangId=${route.params.id}`)
     .then((res) => {
       wenzhang.value = res.data.data[0];
       context.value = res.data.data[0].content;

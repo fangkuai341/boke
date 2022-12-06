@@ -30,4 +30,14 @@ module.exports = defineConfig({
       },
     },
   },
+  pages: {
+    index: {
+      entry: 'src/main.js',
+      template: 'public/index.html',
+    },
+    mobile: {
+      entry: 'src/mobile/main.js',
+      template: 'public/mobileIndex.html',
+    },
+  },
 });

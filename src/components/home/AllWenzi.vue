@@ -70,7 +70,7 @@ const Name = ref();
 const zhuce = async () => {
   await axios({
     method: "POST",
-    url: "http://www.dls-lcy.com/account/reg",
+    url: "./account/reg",
     data: {
       name: Name.value,
       pwd: md5(Pwd.value),
@@ -84,7 +84,7 @@ const zhuce = async () => {
 const denglu = async () => {
   await axios({
     method: "POST",
-    url: "http://www.dls-lcy.com/account/login",
+    url: "./account/login",
     data: {
       name: Name.value,
       pwd: md5(Pwd.value),
@@ -104,7 +104,7 @@ const login = () => {
 onMounted(async () => {
   await axios({
     method: "GET",
-    url: "http://www.dls-lcy.com/wenzi/getCart",
+    url: "./wenzi/getCart",
   }).then((res) => {
     weizhangs.value = res.data.data.reverse();
   });

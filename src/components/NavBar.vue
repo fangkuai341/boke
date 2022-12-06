@@ -27,9 +27,7 @@
             target="_blank"
             >bilibili</a
           >
-          <a href="http://www.dls-lcy.com/erweima.jpg" target="_blank"
-            >微信公众号</a
-          >
+          <a href="./erweima.jpg" target="_blank">微信公众号</a>
           <a href="https://jq.qq.com/?_wv=1027&k=riIqjIjI" target="_blank"
             >QQ群</a
           >
@@ -139,7 +137,7 @@ const newwanzhang = async () => {
   let id;
   await axios({
     method: "GET",
-    url: `http://www.dls-lcy.com/wenzi/getnewwenzahngconcetByUser`,
+    url: `./wenzi/getnewwenzahngconcetByUser`,
   }).then((res) => {
     id = res.data.data;
   });
@@ -153,7 +151,7 @@ const randwanzhang = async () => {
   let id;
   await axios({
     method: "GET",
-    url: `http://www.dls-lcy.com/wenzi/getrandwenzahngconcetByUser`,
+    url: `./wenzi/getrandwenzahngconcetByUser`,
   }).then((res) => {
     id = res.data.data;
   });
