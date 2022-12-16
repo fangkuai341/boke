@@ -116,7 +116,6 @@ const serverDianzan = async () => {
   });
 };
 onMounted(async () => {
-  axios.defaults.baseURL = "http://127.0.0.1:8080";
   //请求拦截
   axios.interceptors.request.use(function (config) {
     config.headers.token = localStorage.getItem("token");

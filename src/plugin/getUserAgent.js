@@ -5,7 +5,6 @@ export default {
             versions: function () {
                 var u = navigator.userAgent
                 return {
-                    //mobile: !!u.match(/AppleWebKit.*Mobile.*/)||!!u.match(/AppleWebKit/), //是否为移动终端
                     mobile: u.match(/(iPhone|iPod|Android|ios|iPad)/i),
                 };
             }()

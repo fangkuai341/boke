@@ -2,10 +2,7 @@
   <div class="updateCurr">
     <NavBar />
     <div>
-      <img
-        src="https://service-5z0sdahv-1306777571.sh.apigw.tencentcs.com/release/"
-        class="img"
-      />
+      <img src="https://api.dujin.org/pic/yuanshen/" class="img" />
     </div>
     <div class="sssss">冀ICP备2022021189</div>
     <router-view :key="$route.path"></router-view>
