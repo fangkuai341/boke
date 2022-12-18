@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="aaa">
     <div class="top">
       <img
         src="@/assets/images/mobile/topImg/a.jpg"
@@ -28,12 +28,12 @@
         </div>
       </div>
     </div>
-    <AllWz />
+    <AllWz v-if="nowTab === 0" id="allWz" />
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import AllWz from "./wenzhang/allWz.vue";
 const nowTab = ref(0);
 const tabs = [
@@ -48,7 +48,15 @@ const fenli = [
   { name: "鬼畜" },
   { name: "随机文章" },
 ];
+const allWz = ref();
 const img = ref();
+onMounted(() => {
+  window.addEventListener("scroll", onscroll);
+});
+const onscroll = () => {
+  const allWz = document.getElementById("allWz");
+  console.log(allWz.offsetTop, document.documentElement.scrollTop);
+};
 const tabClick = (imgUrl, index) => {
   nowTab.value = index;
   img.value.src = require(`@/assets/images/mobile/topImg/${imgUrl}.jpg`);
@@ -59,7 +67,8 @@ const tabClick = (imgUrl, index) => {
 .top {
   height: 200px;
   width: 100vw;
-  position: relative;
+  position: sticky;
+  top: 0;
 }
 .img {
   height: 100%;
