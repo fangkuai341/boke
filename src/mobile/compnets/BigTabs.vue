@@ -1,114 +1,82 @@
 <template>
-  <div id="aaa">
-    <div class="top">
-      <img
-        src="@/assets/images/mobile/topImg/a.jpg"
-        alt=""
-        class="img"
-        ref="img"
-      />
-      <div class="tabs">
-        <div
-          v-for="(item, index) in tabs"
-          :key="item"
-          @click="tabClick(item.img, index)"
-          :style="{ fontWeight: index === nowTab ? 600 : 500 }"
-        >
-          {{ item.name }}
-        </div>
-      </div>
-      <input type="text" class="inputText" />
-      <div class="femliCards">
-        <div v-for="(item, index) in fenli" :key="item.name" class="fenliCard">
-          <img
-            :src="require(`@/assets/images/mobile/topImg/a-${index + 1}.jpg`)"
-            style="width: 40px"
-          />
-          <div class="name">{{ item.name }}</div>
-        </div>
+  <!-- 粘性约束元素 -->
+  <div style="display: inline-block">
+    <div class="title">
+      <div v-for="item in tabs" :key="item.id">{{ item.name }}</div>
+    </div>
+    <div class="topbg">
+      <div style="margin-top: 30px">
+        <input type="text" style="width: 90vw" />
       </div>
     </div>
-    <AllWz v-if="nowTab === 0" id="allWz" />
+    <!-- sticky 元素 -->
+    <div
+      style="
+        width: 100vw;
+        height: 20px;
+        background-color: #fff;
+        z-index: 10;
+        position: sticky;
+        margin-top: 140px;
+        top: 30px;
+      "
+    ></div>
+    <div
+      style="
+        width: 100vw;
+        background-color: #fff;
+        z-index: 10;
+        position: relative;
+      "
+    >
+      <WenZhang :wenzhang="weizhangs" />
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import AllWz from "./wenzhang/allWz.vue";
-const nowTab = ref(0);
+import { onMounted, ref } from "vue";
+import axios from "axios";
+import WenZhang from "@/mobile/compnets/wenzhang/wenzhang.vue";
 const tabs = [
-  { name: "博客文章", img: "a" },
-  { name: "留言", img: "b" },
-  { name: "关注我", img: "c" },
+  { name: "博客文章", img: "a", id: "a" },
+  { name: "留言", img: "b", id: "b" },
+  { name: "关注我", img: "c", id: "c" },
 ];
-const fenli = [
-  { name: "技术" },
-  { name: "游戏" },
-  { name: "动漫" },
-  { name: "鬼畜" },
-  { name: "随机文章" },
-];
-const allWz = ref();
-const img = ref();
-onMounted(() => {
-  window.addEventListener("scroll", onscroll);
+const weizhangs = ref([]);
+onMounted(async () => {
+  await axios({
+    method: "GET",
+    url: "./wenzi/getCart",
+  }).then((res) => {
+    weizhangs.value = res.data.data.reverse();
+  });
 });
-const onscroll = () => {
-  const allWz = document.getElementById("allWz");
-  console.log(allWz.offsetTop, document.documentElement.scrollTop);
-};
-const tabClick = (imgUrl, index) => {
-  nowTab.value = index;
-  img.value.src = require(`@/assets/images/mobile/topImg/${imgUrl}.jpg`);
-};
 </script>
 
-<style scoped lang="less">
-.top {
-  height: 200px;
+<style lang="less" scoped>
+.topbg {
   width: 100vw;
+  height: 200px;
+  //background-color: blue;
+  position: fixed;
+  background-image: url(@/assets/images/mobile/topImg/a.jpg);
+  background-size: cover;
+  filter: brightness(70%);
+  margin-top: -30px;
+}
+.title {
+  height: 30px;
   position: sticky;
+  z-index: 999;
   top: 0;
-}
-.img {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  filter: brightness(0.7);
-  z-index: -1;
-}
-.tabs {
   display: flex;
-  margin: 0 10px;
+  align-items: center;
+  background: #fff;
   div {
     margin-right: 20px;
-    color: #fff;
-    font: 28px tahoma, arial, "Hiragino Sans GB", \5b8b\4f53, sans-serif;
+    font-weight: 600;
+    font-size: 20px;
   }
-}
-.inputText {
-  border-radius: 25px;
-  margin: 15px 10px 0;
-  height: 25px;
-  width: 80vw;
-  background: rgba(0, 0, 0, 0.4);
-  border: transparent;
-  outline: none;
-}
-.femliCards {
-  display: flex;
-  margin-top: 20px;
-}
-.fenliCard {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  justify-content: center;
-  align-items: center;
-}
-.name {
-  margin-top: 5px;
-  color: #fff;
-  font: 15px tahoma, arial, sans-serif;
 }
 </style>

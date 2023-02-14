@@ -145,7 +145,7 @@ onMounted(async () => {
   align-items: center;
 }
 .popup {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
@@ -157,6 +157,10 @@ onMounted(async () => {
     background: #fff;
     padding: 20px 20px;
     border-radius: 8px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
   }
 }
 
