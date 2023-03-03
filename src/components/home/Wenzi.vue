@@ -5,6 +5,7 @@
       <div>{{ wenzhang.time.slice(0, 10) }}</div>
     </div>
     <div class="dates">{{ wenzhang.introduction }}</div>
+
     <div class="img">
       <img
         v-for="(item, index) in img"
@@ -39,13 +40,13 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 import { useStore } from "../../store/index.js";
 const store = useStore();
 const emits = defineEmits(["login"]);
-const props = defineProps({ item: Object });
+const props = defineProps({ item: Object, upList: Object });
 const wenzhang = props.item;
 const dianzan = ref(props.item.givethumbs);
 const isdianzan = ref(false);
@@ -115,24 +116,11 @@ const serverDianzan = async () => {
     },
   });
 };
-onMounted(async () => {
-  //请求拦截
-  axios.interceptors.request.use(function (config) {
-    config.headers.token = localStorage.getItem("token");
-    return config;
-  });
-  //获取用户点赞的文章
-  await axios({
-    method: "POST",
-    url: "./dianzan/isDz",
-    data: {
-      id: JSON.parse(localStorage.getItem("user"))
-        ? JSON.parse(localStorage.getItem("user"))[0].id
-        : "",
-    },
-  }).then((res) => {
-    if (res.data.code === 200) {
-      Upwemzis.value = JSON.parse(res.data.data[0].Upwemzis);
+watch(
+  props,
+  (item) => {
+    if (item.upList.data.code === 200) {
+      Upwemzis.value = JSON.parse(item.upList.data.data[0].Upwemzis);
       store.Upwemzis = Upwemzis.value;
       for (let i = 0; i < Upwemzis.value.length; i++) {
         if (Upwemzis.value[i] === wenzhang.id) {
@@ -141,6 +129,14 @@ onMounted(async () => {
         }
       }
     }
+  },
+  { deep: true }
+);
+onMounted(async () => {
+  //请求拦截
+  axios.interceptors.request.use(function (config) {
+    config.headers.token = localStorage.getItem("token");
+    return config;
   });
 });
 </script>

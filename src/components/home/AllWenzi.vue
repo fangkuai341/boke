@@ -6,6 +6,7 @@
         :key="item.id"
         :item="item"
         @login="login"
+        :upList="upList"
       />
     </div>
     <MyName />
@@ -67,6 +68,7 @@ const iszhuce = ref(false);
 const PwdTwo = ref();
 const Pwd = ref();
 const Name = ref();
+const upList = ref();
 const zhuce = async () => {
   await axios({
     method: "POST",
@@ -107,6 +109,15 @@ onMounted(async () => {
     url: "./wenzi/getCart",
   }).then((res) => {
     weizhangs.value = res.data.data.reverse();
+  });
+  upList.value = await axios({
+    method: "POST",
+    url: "./dianzan/isDz",
+    data: {
+      id: JSON.parse(localStorage.getItem("user"))
+        ? JSON.parse(localStorage.getItem("user"))[0].id
+        : "",
+    },
   });
 });
 //第一种修改方式
