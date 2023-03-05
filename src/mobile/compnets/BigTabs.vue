@@ -12,7 +12,7 @@
       </div>
     </div>
     <div
-      style="position: fixed; z-index: 99; top: 32px; left: 0"
+      style="position: fixed; z-index: 1000; top: 32px; left: 0"
       ref="inputDom"
     >
       <input
@@ -28,7 +28,7 @@
         width: 100vw;
         height: 30px;
         background-color: #fff;
-        z-index: 10;
+        z-index: 100;
         position: sticky;
         margin-top: 140px;
         top: 32px;
@@ -42,12 +42,11 @@
         background-color: #fff;
         z-index: 10;
         position: relative;
-        overflow: hidden;
-        max-height: calc(100vh - 50px);
       "
       ref="allWz"
       @scroll="allWzScroll"
     >
+      <div></div>
       <WenZhang :wenzhang="weizhangs" v-if="nowId === 0" />
       <Liuyan v-if="nowId === 1" />
     </div>
@@ -89,10 +88,13 @@ onMounted(async () => {
     weizhangs.value = res.data.data.reverse();
   });
   window.addEventListener("scroll", () => {
-    if (allTopWz.value.offsetTop - document.documentElement.scrollTop <= 32) {
-      allWz.value.style.overflow = "auto";
+    console.log(allTopWz.value.offsetTop - document.documentElement.scrollTop);
+    if (allTopWz.value.offsetTop - document.documentElement.scrollTop <= 33) {
+      topBg.value.style.height = "32px";
+      topBg.value.style.zIndex = "100";
     } else {
-      allWz.value.style.overflow = "hidden";
+      topBg.value.style.height = "180px";
+      topBg.value.style.zIndex = "0";
     }
     if (allTopWz.value.offsetTop - document.documentElement.scrollTop <= 62) {
       //62到32
@@ -109,7 +111,7 @@ onMounted(async () => {
       titDom.value.style.opacity =
         (1 / 30) *
           (allTopWz.value.offsetTop - document.documentElement.scrollTop) -
-        32 / 30;
+        33 / 30;
       // 𝑦=1/30 𝑥−32/30
     } else {
       //输入框下来
