@@ -88,9 +88,8 @@ onMounted(async () => {
     weizhangs.value = res.data.data.reverse();
   });
   window.addEventListener("scroll", () => {
-    console.log(allTopWz.value.offsetTop - document.documentElement.scrollTop);
-    if (allTopWz.value.offsetTop - document.documentElement.scrollTop <= 33) {
-      topBg.value.style.height = "32px";
+    if (allTopWz.value.offsetTop - document.documentElement.scrollTop <= 37) {
+      topBg.value.style.height = "40px";
       topBg.value.style.zIndex = "100";
     } else {
       topBg.value.style.height = "180px";
@@ -100,11 +99,18 @@ onMounted(async () => {
       //62到32
       //输入框上去
       //top  32-->2
+      console.log(
+        allTopWz.value.offsetTop - document.documentElement.scrollTop
+      );
       inputDom.value.style.top = `${
-        allTopWz.value.offsetTop - document.documentElement.scrollTop - 30
+        allTopWz.value.offsetTop - document.documentElement.scrollTop <= 33
+          ? 2
+          : allTopWz.value.offsetTop - document.documentElement.scrollTop - 30
       }px`;
       inputDom.value.style.left = `${
-        62 - (allTopWz.value.offsetTop - document.documentElement.scrollTop)
+        allTopWz.value.offsetTop - document.documentElement.scrollTop <= 33
+          ? 30
+          : 62 - (allTopWz.value.offsetTop - document.documentElement.scrollTop)
       }px`;
       //文字渐变隐藏
       //top  1-->0

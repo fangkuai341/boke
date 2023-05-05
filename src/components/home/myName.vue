@@ -2,13 +2,13 @@
   <div style="margin-top: 80px; margin-left: 50px; position: fixed; left: 70%">
     <div class="name">
       <img src="@/assets/images/tx.jpg" />
-      <div class="nicheng">洛懿川</div>
+      <div class="nicheng">雪梨</div>
       <div>一个喜欢动漫和鬼畜的前端狗</div>
       <div class="jianjie">{{ jianjie }}</div>
     </div>
     <div class="myZhaoHao">
       <div class="tit">我的账号</div>
-      <div>B站：洛懿川</div>
+      <div>B站：雪梨</div>
       <div>QQ群：173100807</div>
       <div>微信公众号：鬼畜大世界</div>
       <div>github：https://github.com/fangkuai341</div>

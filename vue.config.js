@@ -28,6 +28,16 @@ module.exports = defineConfig({
         target: "http://www.dls-lcy.com",
         changeOrigin: true,
       },
+      "/api": {
+        target: "https://show.bilibili.com/",
+        changeOrigin: true,
+        ws: true,
+        headers: {
+          Referer: "https://show.bilibili.com/",
+          Origin: "https://show.bilibili.com/",
+        },
+      }
+
     },
   },
   pages: {

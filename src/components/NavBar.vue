@@ -19,6 +19,7 @@
         </ul>
       </li>
       <li @click="liuyanclick">留言板</li>
+      <li @click="miyosummerclick">抢票网页</li>
       <li style="margin-right: 50px" class="gzMe">
         关注我<i class="iconfont icon-xiangxia" />
         <ul class="gzMeList">
@@ -33,6 +34,7 @@
           >
         </ul>
       </li>
+
       <div class="saosuo" v-if="hasSearch">
         <i
           class="iconfont icon-sousuo"
@@ -128,6 +130,10 @@ const showInput = () => {
 const liuyanclick = () => {
   router.push({ path: `/message` });
 };
+const miyosummerclick = () => {
+  router.push({ path: `/miyosummer` });
+};
+
 const keydown = (e) => {
   if (e.code === "Enter") {
     router.push({ path: `/search/${keyword.value}` });
