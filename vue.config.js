@@ -31,11 +31,11 @@ module.exports = defineConfig({
       "/api": {
         target: "https://show.bilibili.com/",
         changeOrigin: true,
-        // ws: true,
-        // headers: {
-        //   Referer: "https://show.bilibili.com/",
-        //   Origin: "https://show.bilibili.com/",
-        // },
+        ws: true,
+        headers: {
+          Referer: "https://show.bilibili.com/",
+          Origin: "https://show.bilibili.com/",
+        },
       }
 
     },

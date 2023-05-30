@@ -25,7 +25,7 @@ const onlick = () => {
     () => {
       axios({
         method: "GET",
-        url: `/api/ticket/project/get?version=134&id=71661`,
+        url: `/api/ticket/project/get?version=134&id=68575`,
       }).then((res) => {
         let arr = res.data.data;
         let ticketList =
@@ -36,16 +36,16 @@ const onlick = () => {
               //获取个人信息
               axios({
                 method: "GET",
-                url: `/api/ticket/buyer/list?is_default&projectId=71661`,
+                url: `/api/ticket/buyer/list?is_default&projectId=68575`,
               }),
               axios({
                 //获取token
                 method: "POST",
                 url: `/api/ticket/order/prepare`,
-
                 data: {
-                  project_id: 71661,
-                  screen_id: arr.screen_list[0].id,
+                  project_id: 68575,
+                  screen_id:
+                    arr.screen_list[tian.value ? tian.value - 1 : 0].id,
                   order_type: 1,
                   count: 1,
                   sku_id: ticketList[i].id,
@@ -62,8 +62,9 @@ const onlick = () => {
                 method: "POST",
                 url: `/api/ticket/order/createV2`,
                 data: {
-                  project_id: 71661,
-                  screen_id: arr.screen_list[0].id,
+                  project_id: 68575,
+                  screen_id:
+                    arr.screen_list[tian.value ? tian.value - 1 : 0].id,
                   sku_id: ticketList[i].id,
                   count: 1,
                   pay_money: +qian.value,
@@ -74,7 +75,7 @@ const onlick = () => {
                   buyer_info: JSON.stringify(grxx),
                 },
               }).then((res) => {
-                if (!res.data.errno) {
+                if (res.data.data && res.data.data.length) {
                   clearInterval(data);
                   alert("抢到了，请尽快去支付");
                 }
