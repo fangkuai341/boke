@@ -36,7 +36,7 @@ module.exports = defineConfig({
           Referer: "https://show.bilibili.com/",
           Origin: "https://show.bilibili.com/",
         },
-      }
+      },
 
     },
   },

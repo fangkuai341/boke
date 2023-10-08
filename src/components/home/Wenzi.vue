@@ -11,7 +11,7 @@
         v-for="(item, index) in img"
         :src="item"
         :key="index"
-        style="height: 200px; width: 100%"
+        style="height: 200px"
       />
     </div>
     <div class="bottom">

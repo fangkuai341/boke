@@ -20,6 +20,7 @@
       </li>
       <li @click="liuyanclick">留言板</li>
       <li @click="miyosummerclick">抢票网页</li>
+      <li @click="game">小游戏</li>
       <li style="margin-right: 50px" class="gzMe">
         关注我<i class="iconfont icon-xiangxia" />
         <ul class="gzMeList">
@@ -77,11 +78,14 @@
         v-else-if="tianqi?.indexOf('雪') !== -1"
       ></i>
       <i
-        class="iconfonticon-yintian"
+        class="iconfont icon-yintian"
         v-else-if="tianqi?.indexOf('阴') !== -1"
       ></i>
       <i class="iconfont icon-taiyang" v-else></i>
-      {{ time }}
+      <div>
+        {{ time }}
+      </div>
+      <canvas style="width: 100px; height: 60px"></canvas>
     </div>
   </div>
 </template>
@@ -100,6 +104,12 @@ const input = ref();
 const keyword = ref();
 const tianqi = ref();
 const hasSearch = ref(true);
+const canvas = ref();
+const ctx = ref();
+//获取[min,max]范围内的随机数
+const getRandom = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
 const scrollevent = () => {
   if (document.documentElement.scrollTop > 20) {
     document.querySelector(".bar").style.background = "#66ccff";
@@ -110,6 +120,120 @@ const scrollevent = () => {
     ("rgba(255, 255, 255, 0.7)");
   }
 };
+class Particle {
+  constructor() {
+    const r = Math.min(canvas.value.width, canvas.value.height) / 2;
+    const cx = canvas.value.width / 2;
+    const cy = canvas.value.height / 2;
+    const rad = (getRandom(0, 360) * Math.PI) / 180;
+    this.x = cx + r * Math.cos(rad);
+    this.y = cy + r * Math.sin(rad);
+    this.size = getRandom(2 * devicePixelRatio, 2 * devicePixelRatio);
+  }
+  draw() {
+    ctx.value.beginPath();
+    ctx.value.arc(this.x, this.y, this.size, 0, 2 * Math.PI);
+    ctx.value.fillStyle = "#5445544d";
+    ctx.value.fill();
+  }
+  move(tx, ty) {
+    const duration = 500;
+    const sx = this.x;
+    const sy = this.y;
+    const xSpeed = (tx - sx) / duration;
+    const ySpeed = (ty - sy) / duration;
+    const startTime = Date.now();
+    const _move = () => {
+      const t = Date.now() - startTime;
+      const x = sx + xSpeed * t;
+      const y = sy + ySpeed * t;
+      this.x = x;
+      this.y = y;
+      if (t >= duration) {
+        this.x = tx;
+        this.y = ty;
+        return;
+      }
+      requestAnimationFrame(_move);
+    };
+    _move();
+  }
+}
+const Particles = [];
+let oldTime;
+const draw = () => {
+  ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
+
+  update();
+  Particles.forEach((p) => {
+    p.draw();
+  });
+
+  requestAnimationFrame(draw);
+};
+
+const update = () => {
+  //画时间文字hh:mm:ss
+  //获取当前时间hh:mm:ss
+  let time = new Date().toTimeString().substr(0, 8);
+  if (time === oldTime) {
+    return;
+  }
+  oldTime = time;
+  ctx.value.font = `${20 * devicePixelRatio}px Arial`;
+  ctx.value.fillStyle = "#000";
+  ctx.value.textBaseline = "middle";
+  ctx.value.fillText(time, 10, canvas.value.height / 2);
+  let points = getPoints();
+  ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
+  for (let i = 0; i < points.length; i++) {
+    let p = Particles[i];
+    if (!p) {
+      p = new Particle();
+      Particles.push(p);
+    }
+    const { x, y } = points[i];
+    p.move(x, y);
+  }
+  if (points.length <= Particles.length) {
+    Particles.splice(points.length);
+  }
+};
+
+const getPoints = () => {
+  //取到所有的黑色像素点
+  const { width, height, data } = ctx.value.getImageData(
+    0,
+    0,
+    canvas.value.width,
+    canvas.value.height
+  );
+  let points = [];
+  const gap = 1;
+  for (let i = 0; i < width; i += gap) {
+    for (let j = 0; j < height; j += gap) {
+      const index = (i + j * width) * 4;
+      const r = data[index];
+      const g = data[index + 1];
+      const b = data[index + 2];
+      const a = data[index + 3];
+      if (r === 0 && g === 0 && b === 0 && a === 255) {
+        //如果是黑色像素点
+        points.push({ x: i, y: j });
+      }
+    }
+  }
+  return points;
+};
+onMounted(() => {
+  canvas.value = document.querySelector("canvas");
+  ctx.value = canvas.value.getContext("2d", {
+    willReadFrequently: true,
+  });
+  canvas.value.width = 100 * devicePixelRatio;
+  canvas.value.height = 60 * devicePixelRatio;
+  draw();
+});
 watch(
   () => route,
   (n) => {
@@ -132,6 +256,9 @@ const liuyanclick = () => {
 };
 const miyosummerclick = () => {
   router.push({ path: `/miyosummer` });
+};
+const game = () => {
+  router.push({ path: `/game` });
 };
 
 const keydown = (e) => {
@@ -224,6 +351,7 @@ onBeforeMount(async () => {
 .bar-right {
   display: flex;
   height: 100%;
+  margin-bottom: 0;
   > li {
     color: #fff;
     margin-left: 20px;

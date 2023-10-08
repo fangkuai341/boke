@@ -5,6 +5,7 @@ import search from "@/components/search/index";
 import meg from "@/components/message/index";
 import miyosummer from "@/components/miyosummer/index";
 import fenli from "@/components/search/fenli/index";
+import game from "@/components/game/index";
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
@@ -27,6 +28,11 @@ const router = createRouter({
     {
       path: "/miyosummer",
       component: miyosummer,
+    },
+    {
+      path: "/game",
+      component: game,
+
     },
     {
       path: "/classification/:keyword",
